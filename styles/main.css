@@ -1,0 +1,260 @@
+:root {
+    --darkbg: #000000;
+    --darktext: #F3E9D3;
+    --accentcyan: #79CDB1;
+    --accentteal: #2AA198;
+    --accentviolet: #6c71c4;
+    --accentyellow: #b58900;
+    --accentgreen: #859900;
+    --medbg: #202020;
+    --lightbg: #FDF6E3;
+    --lighttext: #586E75;
+}
+
+/* Animations and Transitions */
+@keyframes glow-pulse {
+	25% {box-shadow: 5px 5px 5px var(--accentgreen);}
+	75% {box-shadow: 5px 5px 5px var(--accentcyan);}
+}
+@keyframes glow-pulse-less {
+	25% {box-shadow: 3px 3px 3px var(--accentgreen);}
+	75% {box-shadow: 3px 3px 3px var(--accentcyan);}
+}
+
+/* Header Styles */
+
+header {
+	text-align: center;
+}
+
+h3+p {
+    padding-top: 8px;
+}
+
+
+nav :nth-child(2n) {
+    background-color: var(--accentyellow);
+}
+
+nav ul {
+	font-size: 0.75em;
+	margin-left: 8%;
+	margin-right: 8%;
+}
+
+nav li {
+	background-color: var(--accentviolet);
+	display: inline-block;
+}
+
+#dropDown {
+	position: relative;
+	display: inline;
+	padding: 0.5em;
+	text-shadow: -0.05em -0.05em 0;
+	color: var(--darkbg);
+}
+
+.open {
+	display: block;
+}
+
+.close {
+	display: none;
+}
+
+h1 {
+	font-size: 3em;
+}
+
+h3 {
+	margin-top: 10%;
+}
+
+
+
+/* Link Styles */
+
+:visited {
+    color: var(--accentyellow);
+}
+
+a {
+    color: var(--accentteal);
+    transition: color 1s ease;
+}
+
+:hover {
+    color: var(--accentcyan);
+}
+
+nav a {
+    color: var(--darkbg);
+	text-decoration: none;
+	font-weight: bold;
+	font-size: 1.5em;
+}
+
+nav a:visited {
+    color: var(--darkbg);
+	text-decoration: none;
+	font-weight: bold;
+	font-size: 1.5em;
+}
+
+
+
+/* Content Styles */
+
+body {
+    background-color: var(--darkbg);
+    color: var(--darktext);
+    font-family: sans-serif;
+	margin-left: 8%;
+	margin-right: 8%;
+}
+
+div p:first-child:first-letter {
+    font-size: 20px;
+    color: var(--accentgreen);
+}
+
+div p:first-child:first-line {
+    font-style: italic;
+}
+
+hr {
+    color: var(--darktext);
+}
+
+section.location-card {
+    background-origin: content-box;
+    background-image: url("../images/beans.jpg");
+    border-color: var(--accentcyan);
+    border-radius: 30px;
+    border-style: solid; border-width: 2px 2px 2px 2px;
+    border-image: url("../images/bean.jpg") 30 round;
+    max-width: 100%;
+}
+
+.location-card>p {
+    padding: 15px;
+    margin: 10px;
+    color: white;
+}
+.location-card>h3 {
+    padding: 10px;
+    margin: 10px;
+    color: white;
+}
+
+
+
+/* Image Styles */
+
+figure {
+	padding: 0.5em;
+	border: solid 4px var(--accentyellow);
+}
+
+figure > img {
+	max-width: 100%;
+}
+
+img+figcaption {
+	font-style: italic; 
+}
+
+
+
+/* Form Styles */
+
+form {
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr 1fr;
+	grid-template-areas: "l l . ."
+						"fs fs para para"
+						"fs fs rec rec"
+						"fs fs . ."
+						"fs fs sb rb";
+	margin-left: 2%;
+	margin-right: 2%;
+}
+
+.l { grid-area: l; }
+.fs { grid-area: fs; }
+.para { grid-area: para; }
+.rec { grid-area: rec; }
+.sb { grid-area: sb; }
+.rb { grid-area: rb; }
+
+label {
+	padding-top: 2em;
+	padding-bottom: 1em;
+	font-size: 1.25em;
+	display: block;
+}
+
+form button {
+	border-radius: 0px;
+	width: 100%;
+}
+
+form select {
+	padding: 0.5em;
+	padding-left: 1em;
+	padding-right: 1em;
+}
+
+#submitBtn {
+	background-color: var(--accentteal);
+	animation-name: glow-pulse;
+	animation-duration: 4s;
+	animation-iteration-count: infinite;
+}
+
+#submitBtn:active {
+	background-color: var(--accentcyan);
+}
+	
+#resetBtn {
+	background-color: var(--accentyellow);
+	animation-name: glow-pulse-less;
+	animation-duration: 4s;
+	animation-iteration-count: infinite;
+}
+
+#resetBtn:active {
+	background-color: var(--accentgreen);
+}
+
+
+
+/* Table Styles */
+table {
+	border: solid var(--accentyellow) 3px;
+	border-collapse: collapse;
+	background-color: var(--medbg);
+}
+
+td {
+	border: solid var(--accentyellow) 1px;
+	padding: 1em;
+}
+
+th {
+	font-weight: bold;
+	padding: 1.5em;
+}
+
+tbody tr:hover {
+	background-color: var(--darkbg);
+}
+
+
+
+/* Footer Styles */
+
+footer>p {
+    font-size: 14px;
+}

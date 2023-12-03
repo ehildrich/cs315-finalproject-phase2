@@ -1,0 +1,82 @@
+/* Header Styles */
+
+nav ul {
+	padding: 0.5em;
+}
+
+nav li {
+	padding-top: 5%;
+	padding-bottom: 5%;
+	width: 100%;
+}
+
+#dropDownContent {
+	text-shadow: 0 0;
+}
+
+#dropDownContent li {
+	background-color: var(--accentviolet);
+	margin: 1%;
+}
+
+h1 {
+	font-size: 2em;
+}
+
+h3 {
+	font-size: 1em;
+}
+
+
+
+/* Content Styles */
+
+body {
+	padding: 1em;
+}
+
+section.location-card {
+    padding: 0.5%;
+    margin-bottom: 7%;
+}
+
+
+
+/* Image Styles */
+
+img+figcaption {
+	padding: 0.2em;
+	font-size: 0.75em; 
+}
+
+
+
+/* Form Styles */
+
+form {
+	grid-template-columns: 1fr 1fr 1fr 1fr;
+	grid-template-areas: "l"
+						"para"
+						"rec"
+						"fs"
+						"sb"
+						"rb";
+	gap: 1em;
+}
+
+button {
+	padding: 1em;
+	margin-top: 8%;
+	margin-bottom: 3%;
+	border-radius: 0px;
+	border: 0px;
+}
+
+input {
+	margin-bottom: 5%;
+}
+
+form #number {
+	width: 100%;
+	padding: 0.5em;
+}
