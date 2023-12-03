@@ -206,14 +206,14 @@ form select {
 	padding-right: 1em;
 }
 
-#submitBtn {
+#submitBtn, #loginBtn, #createBtn {
 	background-color: var(--accentteal);
 	animation-name: glow-pulse;
 	animation-duration: 4s;
 	animation-iteration-count: infinite;
 }
 
-#submitBtn:active {
+#submitBtn:active, #loginBtn:active, #createBtn:active, {
 	background-color: var(--accentcyan);
 }
 	
