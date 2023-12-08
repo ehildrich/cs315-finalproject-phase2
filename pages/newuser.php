@@ -1,5 +1,57 @@
 <DOCTYPE html>
 <html>
+  <?php
+	session_start();
+	error_reporting(E_ALL);
+	ini_set('display_errors', 'On');
+	include "../php/functions.php";
+	
+	$errorMessage = "";
+	$results = "";
+	$userSQL = "";
+  
+	if ($_SERVER["REQUEST_METHOD"] == "POST") {
+		$username = normalizeString($_POST["username"]);
+		$password = normalizeString($_POST["password"]);
+		
+		$userErr = validateString($username);
+		$passErr = validateString($password);
+		if ($userErr != "") {
+			$errorMessage = "You must provide a username.";
+		} else if ($passErr != "") {
+			$errorMessage = "You must provide a password.";
+		} 
+		
+		if ($errorMessage == "") {
+			$dbUser = 'root';
+			$dbPassword = 'root';
+			$db = 'user_data';
+			$host = 'localhost';
+			$port = 8889;
+
+			$link = mysqli_init();
+			$success = mysqli_real_connect($link, $host, $dbUser, $dbPassword, $db, $port);
+			
+			if ($success) {
+				$userSQL = "SELECT * FROM users WHERE username = '" . $username . "'";
+				$results = $link->query($userSQL);
+				
+				if ($results->num_rows != 0) {
+					$errorMessage = "The entered username is taken. Please enter a new username.";
+				} else {
+					$newUser = "INSERT INTO users (username, password) VALUES ('" . $username . "', '" . $password . "')";
+					$link->query($newUser);
+					$_SESSION["currentUser"] = $username;
+				}
+			}
+		}
+		
+	} else {
+		$username = "";
+		$password = "";
+	}
+  ?>
+  
   <head>
     <title>Create Account</title>
 	<link rel="stylesheet" href="../styles/main.css" />
@@ -37,7 +89,7 @@
     </header>
     
 	<main>
-		<form>
+		<form id="loginForm" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
 			<section class="l">
 				<h2>New User</h2>
 			</section>
@@ -50,15 +102,26 @@
 				<fieldset>
 					<legend>Create an Account</legend>
 					<label for="username">Username</label>
-					<input type="text" id="username" />
+					<input type="text" name="username" id="username" />
 					<label for="password">Password</label>
-					<input type="password" id="password" />
+					<input type="password" name="password" id="password" />
 					
 					</br>
 					</br>
 					
 					<section id="validationDiv">
-						<p></p>
+						<p>
+							<?php 
+								if ($errorMessage != "") {
+									echo $errorMessage;
+								}
+								if ($results != "") {
+									foreach ($results as $row) {
+										echo "username: " . $row["username"] . ", password: " . $row["password"];
+									}
+								}
+							?>
+						</p>
 					</section>
 				</fieldset>
 			</section>
