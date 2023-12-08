@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
 	// When submit button is clicked, get inputs and then validate them
-	document.getElementById("loginBtn").addEventListener("click", submitHandler );  
+	document.getElementById("loginBtn").addEventListener("click", submitHandler);  
 });
 
 // Grabs the values from the form fields. No validation is done at this point. 
@@ -48,10 +48,7 @@ function submitHandler(e) {
 		loginBtn.disabled = false;
 		return;
 	} else {
-		const inputJSON = JSON.stringify(inputs);
-		validation.textContent = "Submission successful.";
+		loginBtn.disabled = false;
+		document.getElementById("loginForm").submit();
 	}
-	
-	// Re-enable the submit button. 
-	loginBtn.disabled = false;
 }

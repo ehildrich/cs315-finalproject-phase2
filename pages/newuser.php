@@ -17,18 +17,18 @@
       </hgroup>
       <nav>
         <ul>
-			<li><a href="../index.html">Home</a></li>
-			<li><a href="./about.html">Introduction</a></li>
-			<li><a href="./content.html">Tasting</a></li>
-			<li><a href="./location.html">Origins</a></li>
-			<li><a href="./survey.html">Survey</a></li>
-			<li><a href="./drinks.html">Beverages</a></li>
-			<li><a href="./drinks2.html">More Beverages</a></li>
-			<li><a href="./blog.html">Blog</a>
+			<li><a href="../index.php">Home</a></li>
+			<li><a href="./about.php">Introduction</a></li>
+			<li><a href="./content.php">Tasting</a></li>
+			<li><a href="./location.php">Origins</a></li>
+			<li><a href="./survey.php">Survey</a></li>
+			<li><a href="./drinks.php">Beverages</a></li>
+			<li><a href="./drinks2.php">More Beverages</a></li>
+			<li><a href="./blog.php">Blog</a>
 				<div id="dropDown">&#8650;
 					<ul id="dropDownContent" class="close" >
-						<li><a href="./posts/blonde.html">Blonde</a></li>
-						<li><a href="./posts/oddly.html">Dukamo</a></li>
+						<li><a href="./posts/blonde.php">Blonde</a></li>
+						<li><a href="./posts/oddly.php">Dukamo</a></li>
 					</ul>
 				</div>
 			</li>
@@ -70,6 +70,7 @@
 			<section class="rb">
 				<button type="reset" id="resetBtn">Reset</button>
 			</section>
+		</form>
 	</main>
 	
     <footer>
