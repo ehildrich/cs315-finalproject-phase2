@@ -44,9 +44,9 @@
 			</li>
 			<?php
 				if (isset($_SESSION["currentUser"])) {
-					echo "<li><a href='./account.php'>Account</a></li>";
+					echo "<li><a href='../account.php'>Account</a></li>";
 				} else {
-					echo "<li><a href='./login.php'>Login</a></li>";
+					echo "<li><a href='../login.php'>Login</a></li>";
 				}
 			?>
 		</ul>
