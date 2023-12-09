@@ -44,12 +44,16 @@ section.location-card {
     margin: 2%;
 }
 
+
+
 /* Image Styles */
 
 img+figcaption {
 	padding: 0.5em;
 	font-size: 1.25em; 
 }
+
+
 
 /* Form Styles */
 

@@ -16,7 +16,7 @@
     <header>
       <hgroup>
         <h1>A Brief Introduction to Coffee</h1>
-        <p><strong>General Introduction</strong></p>
+        <p><strong>Your Account</strong></p>
         <p>
 			<?php
 				if (isset($_SESSION["currentUser"])) {
@@ -53,29 +53,22 @@
       </nav>
     </header>
 
-		<h2>Blog Posts</h2>
-		<table>
-		<thead>
-			<tr>
-				<th>Review</th>
-				<th>Score</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr>
-				<td><a href="posts/blonde.php">Starbucks Blonde Roast</a></td>
-				<td>5/10</td>
-			</tr>
-			<tr>
-				<td><a href="posts/oddly.php">Oddly Correct Ethiopia Dukamo Natural</a></td>
-				<td>8/10</td>
-			</tr>
-		</tbody>
-		</table>
+    <main>
+      <h2>Your Account Information</h2>
+	  <?php 
+		if (isset($_SESSION["currentUser"])) {
+			echo "<p>Your username: " . $_SESSION["currentUser"] . "</p>";
+		} else {
+			echo "<p>You are not currently logged in.</p>";
+		}
+	  
+	  
+	  ?>
+    </main>
 
     <footer>
-    <hr>
-    <p>Andrew Ruff, Dottie Hildrich</p>
+	  <hr>
+      <p>Andrew Ruff, Dottie Hildrich</p>
     </footer>
   </body>
 </html>

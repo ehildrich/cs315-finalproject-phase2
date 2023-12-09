@@ -11,6 +11,8 @@
     --lighttext: #586E75;
 }
 
+
+
 /* Animations and Transitions */
 @keyframes glow-pulse {
 	25% {box-shadow: 5px 5px 5px var(--accentgreen);}
@@ -20,6 +22,8 @@
 	25% {box-shadow: 3px 3px 3px var(--accentgreen);}
 	75% {box-shadow: 3px 3px 3px var(--accentcyan);}
 }
+
+
 
 /* Header Styles */
 
@@ -38,8 +42,8 @@ nav :nth-child(2n) {
 
 nav ul {
 	font-size: 0.75em;
-	margin-left: 8%;
-	margin-right: 8%;
+	margin-left: 5%;
+	margin-right: 5%;
 }
 
 nav li {
