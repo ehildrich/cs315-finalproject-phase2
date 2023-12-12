@@ -169,6 +169,10 @@ img+figcaption {
 	font-style: italic; 
 }
 
+img {
+	max-width: 100%;
+}
+
 
 
 /* Form Styles */
@@ -217,7 +221,7 @@ form select {
 	animation-iteration-count: infinite;
 }
 
-#submitBtn:active, #loginBtn:active, #createBtn:active, {
+#submitBtn:active, #loginBtn:active, #createBtn:active {
 	background-color: var(--accentcyan);
 }
 	
