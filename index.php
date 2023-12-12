@@ -13,45 +13,12 @@
   </head>
 
   <body>
-    <header>
-      <hgroup>
-        <h1>A Brief Introduction to Coffee</h1>
-        <p><strong>Home</strong></p>
-        <p>
-			<?php
-				if (isset($_SESSION["currentUser"])) {
-					echo "Welcome, " . $_SESSION["currentUser"];
-				}
-			?>
-		</p>
-      </hgroup>
-      <nav>
-		<ul>
-			<li><a href="./index.php">Home</a></li>
-			<li><a href="pages/about.php">Introduction</a></li>
-			<li><a href="pages/content.php">Tasting</a></li>
-			<li><a href="pages/location.php">Origins</a></li>
-			<li><a href="pages/survey.php">Survey</a></li>
-			<li><a href="pages/drinks.php">Beverages</a></li>
-			<li><a href="pages/drinks2.php">More Beverages</a></li>
-			<li><a href="pages/blog.php">Blog</a>
-				<div id="dropDown">&#8650;
-					<ul id="dropDownContent" class="close" >
-						<li><a href="pages/posts/blonde.php">Blonde</a></li>
-						<li><a href="pages/posts/oddly.php">Dukamo</a></li>
-					</ul>
-				</div>
-			</li>
-			<?php
-				if (isset($_SESSION["currentUser"])) {
-					echo "<li><a href='pages/account.php'>Account</a></li>";
-				} else {
-					echo "<li><a href='pages/login.php'>Login</a></li>";
-				}
-			?>
-		</ul>
-      </nav>
-    </header>
+
+	<?php
+		include "../php/functions.php";
+		pageHeader("Shop");
+	?>
+
 
     <main>
       <p>Welcome to my introduction to coffee website! This is the index, which
