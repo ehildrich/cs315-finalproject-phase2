@@ -38,7 +38,7 @@
 	?>
 
     <main>
-      <h2>Items</h2>
+      <h2>Order Summary</h2>
 	  <?php 
 
  		 // If the user initiated checkout from the cart
@@ -76,37 +76,6 @@
 			$total_string = sprintf("%.2f", $total);
 
 			echo<<<EOT
-			<fieldset>
-				<legend>Address</legend>
-				<label for="address">Street Address</label>
-				<input type="text" id="address"/>
-				<label for="city">City</label>
-				<input type="text" id="city"/>
-				<label for="state">State</label>
-				<input type="text" id="state"/>
-				<label for="zip">ZIP</label>
-				<input type="text" id="zip"/>
-				<p>We currently only ship to the United States.</p>
-				
-				<section id="validationDiv" >
-					<p></p>
-				</section>
-			</fieldset>
-			<fieldset>
-				<legend>Payment Information</legend>
-				<label for="number">Credit Card Number</label>
-				<input type="text" id="number"/>
-				<label for="cvv">3 Wacky Numbers on the Back</label>
-				<input type="text" id="cvv"/>
-				<label for="expiration">Expiration Date</label>
-				<input type="text" id="expiration"/>
-				<p>We currently only accept payment by credit card</p>
-				
-				<section id="validationDiv" >
-					<p></p>
-				</section>
-			</fieldset>
-			<br></br>
 			<strong>Subtotal:</strong> $ {$subtotal_string}
 			<p>+</p>
 			<strong>Shipping:</strong> $ {$ship_string}
@@ -116,6 +85,36 @@
 			<strong>Total:</strong> $ {$total_string}
 			<hr></hr>
 			<form action="order.php" method="post">
+				<fieldset>
+					<legend>Address</legend>
+					<label for="address">Street Address</label>
+					<input type="text" id="address"/>
+					<label for="city">City</label>
+					<input type="text" id="city"/>
+					<label for="state">State</label>
+					<input type="text" id="state"/>
+					<label for="zip">ZIP</label>
+					<input type="text" id="zip"/>
+					<p>We currently only ship to the United States.</p>
+					
+					<section id="validationDiv" >
+						<p></p>
+					</section>
+				</fieldset>
+				<fieldset>
+					<legend>Payment Information</legend>
+					<label for="number">Credit Card Number</label>
+					<input type="text" id="number"/>
+					<label for="cvv">3 Wacky Numbers on the Back</label>
+					<input type="text" id="cvv"/>
+					<label for="expiration">Expiration Date</label>
+					<input type="text" id="expiration"/>
+					<p>We currently only accept payment by credit card</p>
+					
+					<section id="validationDiv" >
+						<p></p>
+					</section>
+				</fieldset>
 				<input type="hidden" name="order" value="true">
 				<input type="submit" value="Order">
 			</form>
