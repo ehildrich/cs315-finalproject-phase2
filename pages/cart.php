@@ -131,8 +131,9 @@
 		$cart = $link->query($get_cart);
 		echo "<p>DEBUG: mysqli error: " . strval(mysqli_error($link)) . "</p>";
 		// echo "<p>DEBUG: products found: " . strval($cart) . "</p>";
-
+		$empty_flag = true;
 		while(($row = mysqli_fetch_assoc($cart)) != NULL) {
+			$empty_flag = false;
 			$query = mysqli_fetch_assoc($link->query("SELECT product_name, price, image_url, description FROM products WHERE product_name = '" . $row["product_name"] . "'"));
 			$price_str = sprintf("%.2f", $query['price']);
 			$item_total = $query['price'] * $row['quantity'];
@@ -152,6 +153,16 @@
 				</form>
 
 			</div>
+			EOT;
+		}
+		// Only show checkout button if cart isn't empty
+		if ($empty_flag == false) {
+			echo<<<EOT
+				<form action="checkout.php" method="post">
+					<input type="hidden" name="checkout" value="true">
+					<input type="submit" value="Checkout">
+				</form>
+
 			EOT;
 		}
 	  ?>
