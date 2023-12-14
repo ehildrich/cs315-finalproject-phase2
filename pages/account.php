@@ -3,6 +3,9 @@
   <?php
 	include "../php/functions.php";
 	session_start();
+	if ($_POST["logout"] == true) {
+		unset($_SESSION["currentUser"]);
+	}
   ?>
   
   <head>
@@ -23,6 +26,12 @@
 	  <?php 
 		if (isset($_SESSION["currentUser"])) {
 			echo "<p>Your username: " . $_SESSION["currentUser"] . "</p>";
+			echo<<<EOT
+			<form action="account.php" method="post">
+				<input type="hidden" name="logout" value="true">
+				<input type="submit" value="Log Out">
+			</form>
+			EOT;
 		} else {
 			echo "<p>You are not currently logged in.</p>";
 		}

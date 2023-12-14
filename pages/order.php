@@ -1,5 +1,3 @@
-<DOCTYPE html>
-<html>
   <?php
 	include "../php/functions.php";
 	// Set a few variables to empty in the event they don't get set later
@@ -21,9 +19,31 @@
 	
     session_start();
 
-  
+	$order_message = "<p>Order Unsuccessful!</p>";
+	// If the user clicked the order button on the checkout page
+	if ($_POST["order"] == true) {
+		if (isset($_SESSION["currentUser"])) {
+			// Clear the user's cart
+			$remove_item = "DELETE FROM shopping_cart WHERE username = '" . $_SESSION["currentUser"] . "'";
+			$link->query($remove_item);
+		}
+		else {
+			$get_inventory = "SELECT product_name FROM products";
+			$inventory = $link->query($get_inventory);
+			while(($row = mysqli_fetch_assoc($inventory)) != NULL) {
+				$cookie_name = cookieizeString($row["product_name"]);
+				if (isset($_COOKIE[$cookie_name])) {
+					setcookie($cookie_name, "", time() - 3600, "/");
+					unset($_COOKIE[$cookie_name]);
+				}
+			}
+		}
+		$order_message = "<p>Order Successful!</p>";
+	}
   ?>
-  
+
+<DOCTYPE html>
+<html>
   <head>
     <title>A Brief Introduction to Coffee</title>
 	<link rel="stylesheet" href="../styles/main.css" />
@@ -39,16 +59,7 @@
     <main>
       <h2>Order Status</h2>
 	  <?php 
-		// If the user clicked the order button on the checkout page
- 		if ($_POST["order"] == true) {
-			// Clear the user's cart
-			$remove_item = "DELETE FROM shopping_cart WHERE username = '" . $_SESSION["currentUser"] . "'";
-			$link->query($remove_item);
-			echo "<p>Order successful!</p>";
- 		}
-		else {
-			echo "<p>Order unsuccessful.</p>";
-		}
+		echo $order_message;
 	  ?>
     </main>
 

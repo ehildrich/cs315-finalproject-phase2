@@ -6,6 +6,17 @@
 		return $newString;
 	}
 
+	function cookieizeString($string) {
+		$newString = str_replace(" ", "_", $string);
+		return $newString;
+	}
+
+	function uncookieizeString($string) {
+		// Underscores should never be used in canonical product names
+		$newString = str_replace("_", " ", $string);
+		return $newString;
+	}
+
 	function validateString($string) {
 		if ($string == "") {
 			return "empty";

@@ -43,27 +43,50 @@
       <h2>Order Summary</h2>
 	  <?php 
 
+		$items_string = "<h4>Items</h4>";
  		 // If the user initiated checkout from the cart
   		if ($_POST["checkout"] == true) {
-			$get_cart = "SELECT product_name, quantity FROM shopping_cart WHERE username = '" . $_SESSION["currentUser"] . "'";
-			//echo "<p>DEBUG: running query: " . $get_cart . "</p>";
-			$cart = $link->query($get_cart);
-			//echo "<p>DEBUG: mysqli error: " . strval(mysqli_error($link)) . "</p>";
-			// echo "<p>DEBUG: products found: " . strval($cart) . "</p>";
 			$shipping_cost = 5.0;
 			$subtotal = 0.0;
+			// SQL version
+			if (isset($_SESSION["currentUser"])) {
+				$get_cart = "SELECT product_name, quantity FROM shopping_cart WHERE username = '" . $_SESSION["currentUser"] . "'";
+				//echo "<p>DEBUG: running query: " . $get_cart . "</p>";
+				$cart = $link->query($get_cart);
+				//echo "<p>DEBUG: mysqli error: " . strval(mysqli_error($link)) . "</p>";
+				// echo "<p>DEBUG: products found: " . strval($cart) . "</p>";
 
-
-			$items_string = "<h4>Items</h4>";
-			while(($row = mysqli_fetch_assoc($cart)) != NULL) {
-				$query = mysqli_fetch_assoc($link->query("SELECT product_name, price, image_url, description FROM products WHERE product_name = '" . $row["product_name"] . "'"));
-				$price_str = sprintf("%.2f", $query['price']);
-				$item_total = $query['price'] * $row['quantity'];
-				$subtotal += $item_total;
-				$item_total_str = sprintf("%.2f", $item_total);
-				# Some of this is from the tutorial linked on the slides
-				$items_string = $items_string . "<p>{$row['product_name']}: 
-					<strong>$ {$price_str} × {$row['quantity']} = $ {$item_total_str}</strong></p>";
+				while(($row = mysqli_fetch_assoc($cart)) != NULL) {
+					$query = mysqli_fetch_assoc($link->query("SELECT product_name, price, image_url, description FROM products WHERE product_name = '" . $row["product_name"] . "'"));
+					$price_str = sprintf("%.2f", $query['price']);
+					$item_total = $query['price'] * $row['quantity'];
+					$subtotal += $item_total;
+					$item_total_str = sprintf("%.2f", $item_total);
+					# Some of this is from the tutorial linked on the slides
+					$items_string = $items_string . "<p>{$row['product_name']}: 
+						<strong>$ {$price_str} × {$row['quantity']} = $ {$item_total_str}</strong></p>";
+				}
+			}
+			// Cookies version
+			else {
+				$get_inventory = "SELECT product_name, price, image_url, description FROM products";
+				//echo "<p>DEBUG: running query: " . $get_cart . "</p>";
+				$inventory = $link->query($get_inventory);
+				while(($row= mysqli_fetch_assoc($inventory)) != NULL) {
+					$cookie_name = cookieizeString($row["product_name"]);
+					// Short-circuit evaluation means this is fine.
+					if (isset($_COOKIE[$cookie_name]) && $_COOKIE[$cookie_name] > 0) {
+						$quantity = $_COOKIE[$cookie_name];
+						$query = mysqli_fetch_assoc($link->query("SELECT product_name, price, image_url, description FROM products WHERE product_name = '" . $row["product_name"] . "'"));
+						$price_str = sprintf("%.2f", $query['price']);
+						$item_total = $query['price'] * $quantity;
+						$subtotal += $item_total;
+						$item_total_str = sprintf("%.2f", $item_total);
+						# Some of this is from the tutorial linked on the slides
+						$items_string = $items_string . "<p>{$row['product_name']}: 
+							<strong>$ {$price_str} × {$quantity} = $ {$item_total_str}</strong></p>";
+					}
+				}
 			}
 			$total = $subtotal + $shipping_cost;
 			$tax = 0.1 * $total;
