@@ -177,7 +177,7 @@ img {
 
 /* Form Styles */
 
-.formPage {
+form {
 	display: grid;
 	grid-template-columns: 1fr 1fr 1fr 1fr;
 	grid-template-areas: "l l . ."
@@ -214,11 +214,18 @@ form select {
 	padding-right: 1em;
 }
 
-#submitBtn, #loginBtn, #createBtn {
+#submitBtn, #loginBtn, #createBtn, #checkoutBtn {
 	background-color: var(--accentteal);
 	animation-name: glow-pulse;
 	animation-duration: 4s;
 	animation-iteration-count: infinite;
+	border-width: 0;
+}
+
+#checkoutBtn {
+	width: 100%;
+	padding: 1em;
+	text-align: center;
 }
 
 #submitBtn:active, #loginBtn:active, #createBtn:active {
@@ -230,6 +237,7 @@ form select {
 	animation-name: glow-pulse-less;
 	animation-duration: 4s;
 	animation-iteration-count: infinite;
+	border-width: 0;
 }
 
 #resetBtn:active {

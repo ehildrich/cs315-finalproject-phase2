@@ -123,7 +123,7 @@
 			echo<<<EOT
 				<form action="checkout.php" method="post">
 					<input type="hidden" name="checkout" value="true">
-					<input type="submit" id="submitBtn" value="Checkout">
+					<input type="submit" class="rb" id="checkoutBtn" value="Checkout">
 				</form>
 
 			EOT;

@@ -2,6 +2,8 @@
 <html>
   <?php
 	include "../php/functions.php";
+	error_reporting(E_ALL);
+    ini_set('display_errors', 'On');
 	// Set a few variables to empty in the event they don't get set later
 	$errorMessage = "";
 	$results = "";
@@ -44,13 +46,15 @@
  		 // If the user initiated checkout from the cart
   		if ($_POST["checkout"] == true) {
 			$get_cart = "SELECT product_name, quantity FROM shopping_cart WHERE username = '" . $_SESSION["currentUser"] . "'";
-			echo "<p>DEBUG: running query: " . $get_cart . "</p>";
+			//echo "<p>DEBUG: running query: " . $get_cart . "</p>";
 			$cart = $link->query($get_cart);
-			echo "<p>DEBUG: mysqli error: " . strval(mysqli_error($link)) . "</p>";
+			//echo "<p>DEBUG: mysqli error: " . strval(mysqli_error($link)) . "</p>";
 			// echo "<p>DEBUG: products found: " . strval($cart) . "</p>";
 			$shipping_cost = 5.0;
 			$subtotal = 0.0;
 
+
+			$items_string = "<h4>Items</h4>";
 			while(($row = mysqli_fetch_assoc($cart)) != NULL) {
 				$query = mysqli_fetch_assoc($link->query("SELECT product_name, price, image_url, description FROM products WHERE product_name = '" . $row["product_name"] . "'"));
 				$price_str = sprintf("%.2f", $query['price']);
@@ -58,13 +62,8 @@
 				$subtotal += $item_total;
 				$item_total_str = sprintf("%.2f", $item_total);
 				# Some of this is from the tutorial linked on the slides
-				echo<<<EOT
-				<div>
-					<p>{$row['product_name']}
-					<strong>$ {$price_str} × {$row['quantity']} = $ {$item_total_str}</strong>
-					</p>
-				</div>
-				EOT;
+				$items_string = $items_string . "<p>{$row['product_name']}: 
+					<strong>$ {$price_str} × {$row['quantity']} = $ {$item_total_str}</strong></p>";
 			}
 			$total = $subtotal + $shipping_cost;
 			$tax = 0.1 * $total;
@@ -76,47 +75,53 @@
 			$total_string = sprintf("%.2f", $total);
 
 			echo<<<EOT
-			<strong>Subtotal:</strong> $ {$subtotal_string}
-			<p>+</p>
-			<strong>Shipping:</strong> $ {$ship_string}
-			<p>+</p>
-			<strong>Tax:</strong> $ {$tax_string}
-			<hr></hr>
-			<strong>Total:</strong> $ {$total_string}
-			<hr></hr>
+			
 			<form action="order.php" method="post">
+				<div class="para">
+					{$items_string}
+				</div>
+				
+				<div class="rec">
+					<strong>Subtotal:</strong> $ {$subtotal_string}
+					<p>+</p>
+					<strong>Shipping:</strong> $ {$ship_string}
+					<p>+</p>
+					<strong>Tax:</strong> $ {$tax_string}
+					<hr></hr>
+					<strong>Total: $ {$total_string}</strong>
+					<hr></hr>
+				</div>
+			
+				<div class="fs">
 				<fieldset>
-					<legend>Address</legend>
+					<legend>Address and Payment Information</legend>
 					<label for="address">Street Address</label>
 					<input type="text" id="address"/>
 					<label for="city">City</label>
 					<input type="text" id="city"/>
 					<label for="state">State</label>
-					<input type="text" id="state"/>
+					<input type="text" maxlength="2" id="state"/>
 					<label for="zip">ZIP</label>
-					<input type="text" id="zip"/>
+					<input type="text" maxlength="5" id="zip"/>
 					<p>We currently only ship to the United States.</p>
 					
-					<section id="validationDiv" >
-						<p></p>
-					</section>
-				</fieldset>
-				<fieldset>
-					<legend>Payment Information</legend>
 					<label for="number">Credit Card Number</label>
-					<input type="text" id="number"/>
+					<input type="text" maxlength="16" id="number"/>
 					<label for="cvv">3 Wacky Numbers on the Back</label>
-					<input type="text" id="cvv"/>
+					<input type="text" maxlength="3" id="cvv"/>
 					<label for="expiration">Expiration Date</label>
-					<input type="text" id="expiration"/>
-					<p>We currently only accept payment by credit card</p>
+					<input type="text" maxlength="5" id="expiration"/>
+					<p>We currently only accept payment by credit card.</p>
 					
 					<section id="validationDiv" >
 						<p></p>
 					</section>
 				</fieldset>
+				</div>
+				
 				<input type="hidden" name="order" value="true">
-				<input type="submit" value="Order">
+				<input type="reset" id="resetBtn" class="rb" value="Reset">
+				<input type="submit" id="checkoutBtn" class="sb" value="Order">
 			</form>
 			EOT;
 		}
