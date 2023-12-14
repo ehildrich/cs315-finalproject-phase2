@@ -1,6 +1,7 @@
 <DOCTYPE html>
 <html>
   <?php
+	include "../php/functions.php";
 	session_start();
   ?>
   
@@ -13,12 +14,9 @@
   </head>
 
   <body>
-
 	<?php
-		include "../php/functions.php";
-		pageHeader("Shop");
+		pageHeader("Account");
 	?>
-
 
     <main>
       <h2>Your Account Information</h2>

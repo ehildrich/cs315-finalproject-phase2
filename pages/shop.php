@@ -34,7 +34,7 @@
 	<?php
 		pageHeader("Shop");
 	?>
-<main>
+	<main>
       <h2>Items</h2>
 	  <?php 
 		$query = $link->query("SELECT product_name, price, image_url, description FROM products ORDER BY price DESC");
@@ -46,10 +46,11 @@
 			echo<<<EOT
 			<div>
 				<h3>{$row['product_name']}</h3>
-				<img width=100% src='/images/{$row['image_url']}'></img>
-				<strong>$ {$price_str}</strong>
-				<p>{$row['description']}</p>
-				<form action="cart.php" method="post">
+				<figure class="storeFigure">
+					<img src='/images/{$row['image_url']}'></img>
+					<figcaption>{$row['description']} - <strong>$ {$price_str}</strong></figcaption>
+				</figure>
+				<form class="shopForm" action="cart.php" method="post">
 					<input type="number" name="quantity" value="1" min="1" placeholder="Quantity" required>
 					<input type="hidden" name="product_name" value="{$row['product_name']}">
 					<input type="hidden" name="updating" value="false">

@@ -81,55 +81,17 @@
   </head>
 
   <body>
-    <header>
-      <hgroup>
-        <h1>A Brief Introduction to Coffee</h1>
-        <p><strong>Cart</strong></p>
-        <p>
-			<?php
-				if (isset($_SESSION["currentUser"])) {
-					echo "Welcome, " . $_SESSION["currentUser"];
-				}
-			?>
-		</p>
-      </hgroup>
-      <nav>
-        <ul>
-			<li><a href="../index.php">Home</a></li>
-			<li><a href="./about.php">Introduction</a></li>
-			<li><a href="./content.php">Tasting</a></li>
-			<li><a href="./location.php">Origins</a></li>
-			<li><a href="./survey.php">Survey</a></li>
-			<li><a href="./drinks.php">Beverages</a></li>
-			<li><a href="./drinks2.php">More Beverages</a></li>
-			<li><a href="./blog.php">Blog</a>
-				<div id="dropDown">&#8650;
-					<ul id="dropDownContent" class="close" >
-						<li><a href="./posts/blonde.php">Blonde</a></li>
-						<li><a href="./posts/oddly.php">Dukamo</a></li>
-					</ul>
-				</div>
-			</li>
-			<li><a href="./shop.php">Shop</a></li>
-			<?php
-				if (isset($_SESSION["currentUser"])) {
-					echo "<li><a href='./cart.php'>Cart</a></li>";
-					echo "<li><a href='./account.php'>Account</a></li>";
-				} else {
-					echo "<li><a href='./login.php'>Login</a></li>";
-				}
-			?>
-		</ul>
-      </nav>
-    </header>
+	<?php
+		pageHeader("Cart");
+	?>
 
     <main>
       <h2>Items</h2>
 	  <?php 
 	  	$get_cart = "SELECT product_name, quantity FROM shopping_cart WHERE username = '" . $_SESSION["currentUser"] . "'";
-		echo "<p>DEBUG: running query: " . $get_cart . "</p>";
+		//echo "<p>DEBUG: running query: " . $get_cart . "</p>";
 		$cart = $link->query($get_cart);
-		echo "<p>DEBUG: mysqli error: " . strval(mysqli_error($link)) . "</p>";
+		//echo "<p>DEBUG: mysqli error: " . strval(mysqli_error($link)) . "</p>";
 		// echo "<p>DEBUG: products found: " . strval($cart) . "</p>";
 		$empty_flag = true;
 		while(($row = mysqli_fetch_assoc($cart)) != NULL) {
@@ -142,10 +104,11 @@
 			echo<<<EOT
 			<div>
 				<h4>{$row['product_name']}</h4>
-				<img width=100% src='/images/{$query['image_url']}'></img>
-				<strong>$ {$price_str} × {$row['quantity']} = $ {$item_total_str}</strong>
-				<p>{$query['description']}</p>
-				<form action="cart.php" method="post">
+				<figure class="storeFigure">
+					<img src='/images/{$query['image_url']}'></img>
+					<figcaption>$ {$price_str} × {$row['quantity']} = <strong>$ {$item_total_str}</strong></figcaption>
+				</figure>
+				<form class="shopForm" action="cart.php" method="post">
 					<input type="number" name="quantity" value="{$row['quantity']}" min="0" placeholder="Quantity" required>
 					<input type="hidden" name="product_name" value="{$row['product_name']}">
 					<input type="hidden" name="updating" value="true">
@@ -160,7 +123,7 @@
 			echo<<<EOT
 				<form action="checkout.php" method="post">
 					<input type="hidden" name="checkout" value="true">
-					<input type="submit" value="Checkout">
+					<input type="submit" id="submitBtn" value="Checkout">
 				</form>
 
 			EOT;

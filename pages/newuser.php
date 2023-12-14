@@ -71,12 +71,10 @@
   </head>
 
   <body>
-
 	<?php
-		pageHeader("Shop");
+		pageHeader("New User");
 	?>
 
-    
 	<main>
 		<form id="loginForm" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
 			<section class="l">

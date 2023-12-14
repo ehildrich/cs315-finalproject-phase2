@@ -1,6 +1,7 @@
 <DOCTYPE html>
 <html>
   <?php
+	include "../php/functions.php";
 	session_start();
   ?>
   
@@ -14,8 +15,7 @@
 
   <body>
 	<?php
-		include "../php/functions.php";
-		pageHeader("Shop");
+		pageHeader("Blog");
 	?>
 
  		<h2>Blog Posts</h2>

@@ -1,6 +1,7 @@
 <DOCTYPE html>
 <html>
   <?php
+	include "../../php/functions.php";
 	session_start();
   ?>
   
@@ -13,45 +14,9 @@
   </head>
 
   <body>
-    <header>
-      <hgroup>
-        <h1>A Brief Introduction to Coffee</h1>
-        <p><strong>General Introduction</strong></p>
-        <p>
-			<?php
-				if (isset($_SESSION["currentUser"])) {
-					echo "Welcome, " . $_SESSION["currentUser"];
-				}
-			?>
-		</p>
-      </hgroup>
-      <nav>
-        <ul>
-			<li><a href="../../index.php">Home</a></li>
-			<li><a href="../about.php">Introduction</a></li>
-			<li><a href="../content.php">Tasting</a></li>
-			<li><a href="../location.php">Origins</a></li>
-			<li><a href="../survey.php">Survey</a></li>
-			<li><a href="../drinks.php">Beverages</a></li>
-			<li><a href="../drinks2.php">More Beverages</a></li>
-			<li><a href="../blog.php">Blog</a>
-				<div id="dropDown">&#8650;
-					<ul id="dropDownContent" class="close" >
-						<li><a href="./blonde.php">Blonde</a></li>
-						<li><a href="./oddly.php">Dukamo</a></li>
-					</ul>
-				</div>
-			</li>
-			<?php
-				if (isset($_SESSION["currentUser"])) {
-					echo "<li><a href='../account.php'>Account</a></li>";
-				} else {
-					echo "<li><a href='../login.php'>Login</a></li>";
-				}
-			?>
-		</ul>
-      </nav>
-    </header>
+	<?php
+		pageHeader("Starbucks Blonde");
+	?>
 
     <section>
 		<h2>Starbucks Blonde Roast Review</h2>
