@@ -26,7 +26,7 @@
 
 	function pageHeader($title) {
 	if (isset($_SESSION["currentUser"])) {
-		$navbar_end = "<li><a href='/pages/cart.php'>Cart</a></li>\n<li><a href='/pages/account.php'>Account</a></li>";
+		$navbar_end = "</li>\n<li><a href='/pages/account.php'>Account</a></li>";
 	} else {
 		$navbar_end = "<li><a href='/pages/login.php'>Login</a></li>";
 	}
@@ -61,6 +61,7 @@
 				</div>
 			</li>
 			<li><a href="/pages/shop.php">Shop</a></li>
+			<li><a href='/pages/cart.php'>Cart</a>
 			{$navbar_end}
 	</ul>
 	</nav>
