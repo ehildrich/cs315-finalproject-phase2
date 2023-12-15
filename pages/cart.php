@@ -125,6 +125,8 @@
 	  <?php 
 		$empty_flag = true;
 		$discount = 1.0;
+		$subtotal = 0.0;
+		$total_quantity = 0;
 		// If the user is logged in
 		if(isset($_SESSION["currentUser"])) {
 			$discount = 0.9;
@@ -140,6 +142,8 @@
 					$price = $query['price'] * $discount;
 					$price_str = sprintf("%.2f", $price);
 					$item_total = $price * $row['quantity'];
+					$subtotal = $subtotal + $item_total;
+					$total_quantity = $total_quantity + $row['quantity'];
 					$item_total_str = sprintf("%.2f", $item_total);
 					# Some of this is from the tutorial linked on the slides
 					echo<<<EOT
@@ -172,6 +176,8 @@
 					$price_str = sprintf("%.2f", $row['price']);
 					$item_total = $row['price'] * $_COOKIE[$cookie_name];
 					$item_total_str = sprintf("%.2f", $item_total);
+					$subtotal = $subtotal + $item_total;
+					$total_quantity = $total_quantity + $row['quantity'];
 					# Some of this is from the tutorial linked on the slides
 					if ($quantity > 0) {
 						$empty_flag = false;
@@ -196,10 +202,16 @@
 			}
 		}
 		// Only show checkout button if cart isn't empty
+		$item_total = round($item_total, 2);
 		if ($empty_flag == false) {
 			echo<<<EOT
 				<form action="checkout.php" method="post">
+					<div class="fs"
+						<p>Number of Items: <strong>$quantity</strong></p>
+						<p>Total: <strong>$ $item_total</strong></p>
+					</div>
 					<input type="hidden" name="checkout" value="true">
+					<div class="sb" id="paymentMethods"></div>
 					<input type="submit" class="rb" id="checkoutBtn" value="Checkout">
 				</form>
 
@@ -209,6 +221,58 @@
 		echo "<p>Your cart is currently empty. Why not check out the <a href='/pages/shop.php'>shop</a>?</p>";
 	  }
 	  ?>
+	
+	
+   
+   <!--This code generates the PayPal button and places it in the paymentMethods div above. -->
+   <script src="//www.paypalobjects.com/api/checkout.js" ></script>
+   <script type="text/javascript">
+        window.onload = function(){
+
+          var CREATE_PAYMENT_URL  = './paypal_ec_redirect.php';
+		  // These default values seem to be required in order for the demo to function. 
+          var formdata = {PAYMENTREQUEST_0_ITEMAMT: 10, PAYMENTREQUEST_0_SHIPPINGAMT : 5,PAYMENTREQUEST_0_TAXAMT: 2, PAYMENTREQUEST_0_AMT: 17, paymentType:'SALE', PAYMENTREQUEST_0_CURRENCYCODE: 'USD', currencyCodeType: 'USD'};
+		  console.log(formdata);
+
+            paypal.Button.render({
+
+                env: 'sandbox',  // sandbox | production
+                locale: 'en_US',
+                style: {
+                    size: 'small',   // tiny | small | medium
+                    color: 'gold',	// gold | blue | silver
+                    shape: 'pill',	// pill | rect
+                    label: 'checkout' // checkout | credit
+                },
+                payment: function(resolve) {
+                    jQuery.post(CREATE_PAYMENT_URL,formdata,function(data) {
+                        console.log("Displaying data here: " + data);
+                        resolve(data); // no data.token, b/c data.token is json format
+                    });
+                },
+
+                onAuthorize: function(data, actions) {
+
+                  var EXECUTE_PAYMENT_URL  = './paypal_ec_redirect.php';
+
+                  jQuery.post(EXECUTE_PAYMENT_URL,
+                  {payToken: data.paymentID, payerId: data.payerID},function(response) {
+                  // if successful navigate to success page
+                  // else
+                  if (response === '10486') {
+                     actions.restart();
+
+                  }});
+                 return actions.redirect();
+
+                },
+
+            }, '#paymentMethods');
+		}
+   </script>
+	<?php include('footer.php') ?>
+
+	
     </main>
 
     <footer>

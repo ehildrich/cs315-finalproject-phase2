@@ -36,6 +36,7 @@
 	?>
 	<main>
       <h2>Items</h2>
+	  <p>Logged in users will get a 10% discount on all items!</p>
 	  <?php 
 	    $discount = 1.0;
 		if (isset($_SESSION["currentUser"])) {
@@ -52,7 +53,7 @@
 			<div>
 				<h3>{$row['product_name']}</h3>
 				<figure class="storeFigure">
-					<img src='/images/{$row['image_url']}'></img>
+					<img src='/images/{$row['image_url']}'>
 					<figcaption>{$row['description']} - <strong>$ {$price_str}</strong></figcaption>
 				</figure>
 				<form class="shopForm" action="cart.php" method="post">
