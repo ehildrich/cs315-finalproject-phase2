@@ -57,9 +57,9 @@
 			$address = normalizeString($_POST["address"]);
 			$city = normalizeString($_POST["city"]);
 			$state = normalizeString($_POST["state"]);
-			$zip = $_POST["zip"];
-			$creditCard = $_POST["number"];
-			$cvv = $_POST["cvv"];
+			$zip = normalizeString($_POST["zip"]);
+			$creditCard = normalizeString($_POST["number"]);
+			$cvv = normalizeString($_POST["cvv"]);
 			$expiration = normalizeString($_POST["expiration"]);
 			$error = false;
 			
@@ -121,7 +121,7 @@
 				$expirationErr = "You must provide an expiration date.";
 				$expiration = true;
 			} else if (strlen($expiration) != 5) {
-				$cvvErr = "Expiration date must be in the form of XX/XX.";
+				$expirationErr = "Expiration date must be in the form of XX/XX.";
 				$error = true;
 			}
 			

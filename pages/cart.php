@@ -125,8 +125,6 @@
 	  <?php 
 		$empty_flag = true;
 		$discount = 1.0;
-		$subtotal = 0.0;
-		$total_quantity = 0;
 		// If the user is logged in
 		if(isset($_SESSION["currentUser"])) {
 			$discount = 0.9;
@@ -142,8 +140,6 @@
 					$price = $query['price'] * $discount;
 					$price_str = sprintf("%.2f", $price);
 					$item_total = $price * $row['quantity'];
-					$subtotal = $subtotal + $item_total;
-					$total_quantity = $total_quantity + $row['quantity'];
 					$item_total_str = sprintf("%.2f", $item_total);
 					# Some of this is from the tutorial linked on the slides
 					echo<<<EOT
@@ -176,8 +172,6 @@
 					$price_str = sprintf("%.2f", $row['price']);
 					$item_total = $row['price'] * $_COOKIE[$cookie_name];
 					$item_total_str = sprintf("%.2f", $item_total);
-					$subtotal = $subtotal + $item_total;
-					$total_quantity = $total_quantity + $row['quantity'];
 					# Some of this is from the tutorial linked on the slides
 					if ($quantity > 0) {
 						$empty_flag = false;
@@ -206,10 +200,6 @@
 		if ($empty_flag == false) {
 			echo<<<EOT
 				<form action="checkout.php" method="post">
-					<div class="fs"
-						<p>Number of Items: <strong>$quantity</strong></p>
-						<p>Total: <strong>$ $item_total</strong></p>
-					</div>
 					<input type="hidden" name="checkout" value="true">
 					<div class="sb" id="paymentMethods"></div>
 					<input type="submit" class="rb" id="checkoutBtn" value="Checkout">
