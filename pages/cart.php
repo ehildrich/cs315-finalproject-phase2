@@ -202,7 +202,7 @@
 			EOT;
 		}
 	  else {
-		echo "<p>Empty cart.</p>";
+		echo "<p>Your cart is currently empty. Why not check out the <a href='/pages/shop.php'>shop</a>?</p>";
 	  }
 	  ?>
     </main>

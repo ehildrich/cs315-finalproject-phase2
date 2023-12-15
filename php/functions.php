@@ -6,6 +6,15 @@
 		return $newString;
 	}
 
+	function validateString($string) {
+		if ($string == "") {
+			return "empty";
+		}
+		return "";
+	}
+
+
+
 	function cookieizeString($string) {
 		$newString = str_replace(" ", "_", $string);
 		return $newString;
@@ -17,11 +26,6 @@
 		return $newString;
 	}
 
-	function validateString($string) {
-		if ($string == "") {
-			return "empty";
-		}
-	}
 
 
 	function pageHeader($title) {
@@ -61,7 +65,7 @@
 				</div>
 			</li>
 			<li><a href="/pages/shop.php">Shop</a></li>
-			<li><a href='/pages/cart.php'>Cart</a>
+			<li><a href='/pages/cart.php'>Cart</a></li>
 			{$navbar_end}
 	</ul>
 	</nav>

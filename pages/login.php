@@ -97,7 +97,7 @@
 					</br>
 					</br>
 					
-					<section id="validationDiv">
+					<section class="validation" id="validationDiv">
 						<p><?php 
 								// Any PHP error message will appear here each time the page loads. 
 								if ($errorMessage != "") {

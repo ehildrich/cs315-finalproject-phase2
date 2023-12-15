@@ -244,6 +244,10 @@ form select {
 	background-color: var(--accentgreen);
 }
 
+.validation {
+	color: red;
+}
+
 
 
 /* Table Styles */

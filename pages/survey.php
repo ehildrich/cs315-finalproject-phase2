@@ -66,7 +66,7 @@
 					</br>
 					</br>
 					
-					<section id="validationDiv" >
+					<section class="validation" id="validationDiv">
 						<p></p>
 					</section>
 				</fieldset>
