@@ -129,6 +129,20 @@
 			if ($error == false) {
 				$order_message = "<h1>Order Unsuccessful!</h1>";
 				if (isset($_SESSION["currentUser"])) {
+					// Get the list of items ordered
+					$get_cart = "SELECT product_name, quantity FROM shopping_cart WHERE username = '" . $_SESSION["currentUser"] . "'";
+					$cart = $link->query($get_cart);
+					
+					// Create a string representation of all the items ordered
+					$items_string = "";
+					while(($row = mysqli_fetch_assoc($cart)) != NULL) {
+						$items_string = $items_string . $row['product_name'] . ": " . $row['quantity'] . " ";
+					}
+					
+					// Save the user's order information to the database
+					$save_order = "INSERT INTO `orders`(`username`, `credit_card`, `shipping_address`, `items`) VALUES ('" . $_SESSION["currentUser"] . "','" . $creditCard . "','" . $address . ", " . $city . " " . $state . " " . $zip . "','" . $items_string . "')";
+					$link->query($save_order);
+					
 					// Clear the user's cart
 					$remove_item = "DELETE FROM shopping_cart WHERE username = '" . $_SESSION["currentUser"] . "'";
 					$link->query($remove_item);
