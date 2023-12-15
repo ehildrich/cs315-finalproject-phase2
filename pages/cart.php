@@ -22,6 +22,7 @@
   // From the tutorial but modified
   // If the user clicked the add to cart button on the product page we can check for the form data
   if (isset($_POST['product_name'], $_POST['quantity']) && is_string($_POST['product_name']) && is_numeric($_POST['quantity'])) {
+	
     // Set the post variables so we easily identify them, also make sure they are integer
     $product_name = normalizeString($_POST['product_name']);
     $quantity = (int)$_POST['quantity'];
@@ -123,8 +124,10 @@
       <h2>Items</h2>
 	  <?php 
 		$empty_flag = true;
+		$discount = 1.0;
 		// If the user is logged in
 		if(isset($_SESSION["currentUser"])) {
+			$discount = 0.9;
 			$get_cart = "SELECT product_name, quantity FROM shopping_cart WHERE username = '" . $_SESSION["currentUser"] . "'";
 			//echo "<p>DEBUG: running query: " . $get_cart . "</p>";
 			$cart = $link->query($get_cart);
@@ -134,8 +137,9 @@
 				while(($row = mysqli_fetch_assoc($cart)) != NULL) {
 					$empty_flag = false;
 					$query = mysqli_fetch_assoc($link->query("SELECT product_name, price, image_url, description FROM products WHERE product_name = '" . $row["product_name"] . "'"));
-					$price_str = sprintf("%.2f", $query['price']);
-					$item_total = $query['price'] * $row['quantity'];
+					$price = $query['price'] * $discount;
+					$price_str = sprintf("%.2f", $price);
+					$item_total = $price * $row['quantity'];
 					$item_total_str = sprintf("%.2f", $item_total);
 					# Some of this is from the tutorial linked on the slides
 					echo<<<EOT

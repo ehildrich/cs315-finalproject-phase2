@@ -37,11 +37,16 @@
 	<main>
       <h2>Items</h2>
 	  <?php 
+	    $discount = 1.0;
+		if (isset($_SESSION["currentUser"])) {
+			$discount = 0.9;
+		}
 		$query = $link->query("SELECT product_name, price, image_url, description FROM products ORDER BY price DESC");
 
 		while(($row = mysqli_fetch_assoc($query)) != NULL) {
 		
-			$price_str = sprintf("%.2f", $row['price']);
+			$price = $row['price'] * $discount;
+			$price_str = sprintf("%.2f", $price);
 			# Some of this is from the tutorial linked on the slides
 			echo<<<EOT
 			<div>

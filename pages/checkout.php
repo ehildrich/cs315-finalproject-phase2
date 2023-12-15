@@ -158,7 +158,9 @@
 			$shipping_cost = 5.0;
 			$subtotal = 0.0;
 			// SQL version
+			$discount = 1.0;
 			if (isset($_SESSION["currentUser"])) {
+				$discount = 0.9;
 				$get_cart = "SELECT product_name, quantity FROM shopping_cart WHERE username = '" . $_SESSION["currentUser"] . "'";
 				//echo "<p>DEBUG: running query: " . $get_cart . "</p>";
 				$cart = $link->query($get_cart);
@@ -167,8 +169,9 @@
 
 				while(($row = mysqli_fetch_assoc($cart)) != NULL) {
 					$query = mysqli_fetch_assoc($link->query("SELECT product_name, price, image_url, description FROM products WHERE product_name = '" . $row["product_name"] . "'"));
-					$price_str = sprintf("%.2f", $query['price']);
-					$item_total = $query['price'] * $row['quantity'];
+					$price = $query['price'] * $discount;
+					$price_str = sprintf("%.2f", $price);
+					$item_total = $price * $row['quantity'];
 					$subtotal += $item_total;
 					$item_total_str = sprintf("%.2f", $item_total);
 					# Some of this is from the tutorial linked on the slides
